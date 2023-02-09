@@ -94,7 +94,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </ul>
         <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
           <li class="nav-item">
-            <a class="nav-link" href="./admin/users_list.php">Admin</a>
+            <a class="nav-link" href="./admin.php">Admin</a>
           </li>
           <li class="nav-item">
             <a class="nav-link text-secondary active" href="./user_profile.php"><?php echo htmlspecialchars($_SESSION["username"]); ?></a>

@@ -1,154 +1,146 @@
 <?php
-include '../../connection.php';
+// Include config file
+require_once "../connection.php";
 
-// Initialize variables for storing the form data
-$username = "";
-$email = "";
-$password = "";
-$errors = array();
+// Define variables and initialize with empty values
+$username = $password = $confirm_password = "";
+$username_err = $password_err = $confirm_password_err = "";
 
-// If the register button is clicked
-if (isset($_POST['register'])) {
-  // Get the form data
-  $username = mysqli_real_escape_string($conn, $_POST['username']);
-  $email = mysqli_real_escape_string($conn, $_POST['email']);
-  $password = mysqli_real_escape_string($conn, $_POST['password']);
-  $password_confirm = mysqli_real_escape_string($conn, $_POST['password_confirm']);
+// Processing form data when form is submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
-  // Ensure all required fields are filled
-  if (empty($username)) {
-    array_push($errors, "Username is required");
-  }
-  if (empty($email)) {
-    array_push($errors, "Email is required");
-  }
-  if (empty($password)) {
-    array_push($errors, "Password is required");
-  }
-  if (empty($password_confirm)) {
-    array_push($errors, "Confirm password is required");
-  }
+  // Validate username
+  if (empty(trim($_POST["username"]))) {
+    $username_err = "Please enter a username.";
+  } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))) {
+    $username_err = "Username can only contain letters, numbers, and underscores.";
+  } else {
+    // Prepare a select statement
+    $sql = "SELECT id FROM users WHERE username = ?";
 
-  // Check if the passwords match
-  if ($password != $password_confirm) {
-    array_push($errors, "Passwords do not match");
-  }
+    if ($stmt = $mysqli->prepare($sql)) {
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param("s", $param_username);
 
-  // Check if the username or email already exists
-  $user_check_query = "SELECT * FROM users WHERE username='$username' OR email='$email' LIMIT 1";
-  $result = mysqli_query($conn, $user_check_query);
-  $user = mysqli_fetch_assoc($result);
+      // Set parameters
+      $param_username = trim($_POST["username"]);
 
-  if ($user) {
-    if ($user['username'] === $username) {
-      array_push($errors, "Username already exists");
-    }
-    if ($user['email'] === $email) {
-      array_push($errors, "Email already exists");
+      // Attempt to execute the prepared statement
+      if ($stmt->execute()) {
+        // store result
+        $stmt->store_result();
+
+        if ($stmt->num_rows == 1) {
+          $username_err = "This username is already taken.";
+        } else {
+          $username = trim($_POST["username"]);
+        }
+      } else {
+        echo "Oops! Something went wrong. Please try again later.";
+      }
+
+      // Close statement
+      $stmt->close();
     }
   }
 
-  // If there are no errors, insert the user into the database
-  if (count($errors) == 0) {
-    $password = password_hash($password, PASSWORD_BCRYPT);
-    $query = "INSERT INTO users (username, email, password) VALUES ('$username', '$email', '$password')";
-    if (mysqli_query($conn, $query)) {
-      echo "User registered successfully";
-    } else {
-      echo "Error registering user: " . mysqli_error($conn);
+  // Validate password
+  if (empty(trim($_POST["password"]))) {
+    $password_err = "Please enter a password.";
+  } elseif (strlen(trim($_POST["password"])) < 6) {
+    $password_err = "Password must have atleast 6 characters.";
+  } else {
+    $password = trim($_POST["password"]);
+  }
+
+  // Validate confirm password
+  if (empty(trim($_POST["confirm_password"]))) {
+    $confirm_password_err = "Please confirm password.";
+  } else {
+    $confirm_password = trim($_POST["confirm_password"]);
+    if (empty($password_err) && ($password != $confirm_password)) {
+      $confirm_password_err = "Password did not match.";
     }
   }
+
+  // Check input errors before inserting in database
+  if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+
+    // Prepare an insert statement
+    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+
+    if ($stmt = $mysqli->prepare($sql)) {
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param("ss", $param_username, $param_password);
+
+      // Set parameters
+      $param_username = $username;
+      $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+
+      // Attempt to execute the prepared statement
+      if ($stmt->execute()) {
+        // Redirect to login page
+        echo ' <div class="alert alert-primary" role="alert">
+          User is registered successfully!
+        </div>';
+      } else {
+        echo "Oops! Something went wrong. Please try again later.";
+      }
+
+      // Close statement
+      $stmt->close();
+    }
+  }
+
+  // Close connection
+  $mysqli->close();
 }
-
 ?>
 
-
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Weekly schedule management system</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <meta charset="UTF-8">
+  <title>Sign Up</title>
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link " aria-current="page" href="../index.php">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" href="./users/user_login.php">Login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="./user_register.php">Register</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <?php
-  // Check if the form has been submitted
-
-  ?>
-  <section class="container p-3">
-    <?php
-    if (isset($error)) {
-      echo "<p style='color:red;'>$error</p>";
-    }
-    ?>
+  <section>
+    <ul class="nav nav-pills nav-fill p-4">
+      <li class="nav-item">
+        <a class="nav-link " aria-current="page" href="admin.php?page=users_list">Users List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="admin.php?page=add_user">Add User</a>
+      </li>
+    </ul>
+  </section>
+  <div class="container p-5">
+    <h2>Sign Up</h2>
+    <p>Please fill this form to create an account.</p>
     <form action="" method="post">
       <div class="mb-3">
         <label for="username" class="form-label">Username</label>
-        <input type="text" class="form-control" id="username" name="username" aria-describedby="username">
-      </div>
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input type="email" class="form-control" id="email" name="email" aria-describedby="email">
+        <input type="text" name="username" id="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
+        <span class="invalid-feedback"><?php echo $username_err; ?></span>
       </div>
       <div class="mb-3">
         <label for="password" class="form-label">Password</label>
-        <input type="password" class="form-control" id="password" name="password">
+        <input type="password" name="password" id="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
+        <span class="invalid-feedback"><?php echo $password_err; ?></span>
       </div>
       <div class="mb-3">
-        <label for="confirm_password" class="form-label">Confirmed Password</label>
-        <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+        <label for="confirm_password" class="form-label">Confirm Password</label>
+        <input type="password" name="confirm_password" id="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
+        <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
       </div>
-      <button type="submit" name="submit" value="Login" class="btn btn-primary">Submit</button>
+      <div class="mb-3">
+        <input type="submit" class="btn btn-primary" value="Submit">
+      </div>
     </form>
-    <?php
-    if (isset($_POST['submit'])) {
-      $username = $_POST['username'];
-      $email = $_POST['email'];
-      $password = $_POST['password'];
-      $confirm_password = $_POST['confirm_password'];
-
-      // Check if the passwords match
-      if ($password != $confirm_password) {
-        $error = "Passwords do not match.";
-      } else {
-        // Hash the password
-        $password = password_hash($password, PASSWORD_DEFAULT);
-
-        // Prepare and execute the INSERT statement
-        $stmt = $conn->prepare("INSERT INTO users (username, email, password) VALUES (?, ?, ?)");
-        $stmt->bind_param("sss", $username, $email, $password);
-        if ($stmt->execute()) {
-          exit;
-        } else {
-          // An error occurred
-          $error = "Error: " . $stmt->error;
-        }
-      }
-    }
-    ?>
-  </section>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+  </div>
 </body>
 
 </html>
