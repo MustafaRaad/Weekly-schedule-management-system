@@ -1,6 +1,6 @@
 <?php
 // Include config file
-require_once "../connection.php";
+require_once "../../connection.php";
 
 // Define variables and initialize with empty values
 $username = $password = $confirm_password = "";
@@ -101,7 +101,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Sign Up</title>
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>

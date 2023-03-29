@@ -14,10 +14,10 @@
   <section>
     <ul class="nav nav-pills nav-fill p-4">
       <li class="nav-item border rounded">
-        <a class="nav-link active" aria-current="page" href="admin.php?page=users_list">قائمة المستخدمين</a>
+        <a class="nav-link active" aria-current="page" href="teachers.php?page=teachers_list">قائمة الصفوف</a>
       </li>
       <li class="nav-item border rounded">
-        <a class="nav-link" href="admin.php?page=add_user">اضافة مستخدم</a>
+        <a class="nav-link " href="teachers.php?page=add_teachers">اضافة صف</a>
       </li>
     </ul>
   </section>

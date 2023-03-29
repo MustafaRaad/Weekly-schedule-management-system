@@ -9,5 +9,5 @@ $_SESSION = array();
 session_destroy();
  
 // Redirect to login page
-header("location: /wsms/users/user_login.php");
+header("location: /wsms/pages/users/user_login.php");
 exit;

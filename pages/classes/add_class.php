@@ -107,13 +107,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
+
   <section>
     <ul class="nav nav-pills nav-fill p-4">
       <li class="nav-item border rounded">
-        <a class="nav-link " aria-current="page" href="admin.php?page=users_list">قائمة المستخدمين</a>
+        <a class="nav-link" aria-current="page" href="classes.php?page=classes_list">قائمة الصفوف</a>
       </li>
       <li class="nav-item border rounded">
-        <a class="nav-link active" href="admin.php?page=add_user">اضافة مستخدم</a>
+        <a class="nav-link active" href="classes.php?page=add_class">اضافة صف</a>
       </li>
     </ul>
   </section>

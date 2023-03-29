@@ -4,5 +4,5 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
   header("location: /wsms/pages/home.php");
   exit;
 } else{
-  header("location: /wsms/users/user_login.php");
+  header("location: /wsms/pages/users/user_login.php");
 }

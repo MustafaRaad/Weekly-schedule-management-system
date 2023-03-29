@@ -77,52 +77,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <meta charset="UTF-8">
   <title>Reset Password</title>
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../assets/css/style.css" rel="stylesheet">
 
 </head>
 
 <body>
-  <nav class="navbar navbar-expand bg-success-subtle px-5">
-    <div class="container-fluid">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" aria-current="page" href="/pages/home.php">Home</a>
-          </li>
-        </ul>
-        <ul class="navbar-nav ml-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" href="./admin.php">Admin</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-secondary active" href="./user_profile.php"><?php echo htmlspecialchars($_SESSION["username"]); ?></a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link text-danger" href="../users/user_logout.php">Logout ></a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+  <?php
+  include  'header.php';
+  ?>
   <div class="container p-5">
-    <h2>Reset Password</h2>
-    <p>Please fill out this form to reset your password.</p>
+    <h2>تبديل كلمة المرور</h2>
+    <p>يرجى ملء هذا النموذج لإعادة تعيين كلمة المرور الخاصة بك.</p>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
       <div class="mb-3">
-        <label for="new_password" class="form-label">New Password</label>
+        <label for="new_password" class="form-label">كلمة المرور الجديدة</label>
         <input type="password" name="new_password" id="new_password" class="form-control <?php echo (!empty($new_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $new_password; ?>">
         <span class="invalid-feedback"><?php echo $new_password_err; ?></span>
       </div>
       <div class="mb-3">
-        <label for="confirm_password" class="form-label">Confirm Password</label>
+        <label for="confirm_password" class="form-label">تأكيد كلمة المرور</label>
         <input type="password" name="confirm_password" id="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
         <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
       </div>
       <div class="mb-3">
-        <input type="submit" class="btn btn-primary" value="Submit">
-        <a class="btn btn-link ml-2" href="welcome.php">Cancel</a>
+        <input type="submit" class="btn btn-primary" value="تبديل">
+        <a class="btn btn-link ml-2" href="welcome.php">الغاء</a>
       </div>
     </form>
   </div>

@@ -18,12 +18,12 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   <meta http-equiv="X-UA-Compatible" content="ie=edge" />
   <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
   <link href="../assets/css/style.css" rel="stylesheet">
-  <title>Admin Panel</title>
+  <title>Classes</title>
 </head>
 
 <body>
   <?php
-  include  'header.php';
+  include 'header.php';
   ?>
 
   <div class="container mt-5">
@@ -32,11 +32,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       $page = $_GET['page'];
 
       switch ($page) {
-        case 'users_list':
-          include './admin/users_list.php';
+        case 'classes_list':
+          include './classes/classes_list.php';
           break;
-        case 'add_user':
-          include './admin/add_user.php';
+        case 'add_class':
+          include './classes/add_class.php';
           break;
         default:
           echo 'Page not found';
@@ -46,10 +46,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <section class="container">
         <ul class="nav nav-pills nav-fill p-4">
           <li class="nav-item border rounded">
-            <a class="nav-link" aria-current="page" href="admin.php?page=users_list">قائمة المستخدمين</a>
+            <a class="nav-link " aria-current="page" href="classes.php?page=classes_list">قائمة الصفوف</a>
           </li>
           <li class="nav-item border rounded">
-            <a class="nav-link" href="admin.php?page=add_user">اضافة مستخدم</a>
+            <a class="nav-link " href="classes.php?page=add_class">اضافة صف</a>
           </li>
         </ul>
       </section>

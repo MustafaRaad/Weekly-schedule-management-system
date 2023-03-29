@@ -9,7 +9,7 @@ if (isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) {
 }
 
 // Include config file
-require_once "../connection.php";
+require_once "../../connection.php";
 
 // Define variables and initialize with empty values
 $username = $password = "";
@@ -94,13 +94,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
   <meta charset="UTF-8">
   <title>Login</title>
-  <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
+  <link href="../../assets/css/style.css" rel="stylesheet">
 </head>
 
 <body>
   <div class="container p-5">
-    <h2>Login</h2>
-    <p>Please fill in your credentials to login.</p>
+    <h2>تسجيل الدخول</h2>
+    <p>يرجى ملء بيانات الاعتماد الخاصة بك لتسجيل الدخول.</p>
 
     <?php
     if (!empty($login_err)) {
@@ -110,17 +111,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
       <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
+        <label for="username" class="form-label">اسم المستخدم</label>
         <input type="text" name="username" id="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
         <span class="invalid-feedback"><?php echo $username_err; ?></span>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">كلمة المرور</label>
         <input type="password" name="password" id="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>">
         <span class="invalid-feedback"><?php echo $password_err; ?></span>
       </div>
       <div class="mb-3">
-        <input type="submit" class="btn btn-primary" value="Login">
+        <input type="submit" class="btn btn-primary" value="تسجيل الدخول">
       </div>
     </form>
   </div>
