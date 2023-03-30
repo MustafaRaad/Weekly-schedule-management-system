@@ -25,11 +25,11 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   include  'header.php';
   ?>
   <section class="container p-3">
-    <!-- <div class="d-flex">
+    <div class="d-flex">
+      <!-- <button class="col border m-3 p-3">المواد</button>
       <button class="col border m-3 p-3">المواد</button>
-      <button class="col border m-3 p-3">المواد</button>
-      <button class="col border m-3 p-3">المواد</button>
-    </div> -->
+      <button class="col border m-3 p-3">المواد</button> -->
+    </div>
 
   </section>
   <script src="/assets/js/bootstrap.bundle.min.js"></script>
