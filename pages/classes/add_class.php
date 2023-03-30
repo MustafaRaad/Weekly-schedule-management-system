@@ -3,38 +3,33 @@
 require_once "../connection.php";
 
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
+$title = $department = $college = $date = "";
+$title_err = $department_err = $college_err = $date_err = "";
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // Validate username
-  if (empty(trim($_POST["username"]))) {
-    $username_err = "Please enter a username.";
-  } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["username"]))) {
-    $username_err = "Username can only contain letters, numbers, and underscores.";
+  if (empty(trim($_POST["title"]))) {
+    $title_err = "Please enter a title.";
+  } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["title"]))) {
+    $title_err = "title can only contain letters, numbers, and underscores.";
   } else {
     // Prepare a select statement
-    $sql = "SELECT id FROM users WHERE username = ?";
+    $sql = "SELECT id FROM classes WHERE title = ?";
 
     if ($stmt = $mysqli->prepare($sql)) {
       // Bind variables to the prepared statement as parameters
-      $stmt->bind_param("s", $param_username);
+      $stmt->bind_param("s", $param_title);
 
       // Set parameters
-      $param_username = trim($_POST["username"]);
+      $param_title = trim($_POST["title"]);
 
       // Attempt to execute the prepared statement
       if ($stmt->execute()) {
         // store result
         $stmt->store_result();
-
-        if ($stmt->num_rows == 1) {
-          $username_err = "This username is already taken.";
-        } else {
-          $username = trim($_POST["username"]);
-        }
+        $title = trim($_POST["title"]);
       } else {
         echo "Oops! Something went wrong. Please try again later.";
       }
@@ -44,47 +39,115 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
   }
 
-  // Validate password
-  if (empty(trim($_POST["password"]))) {
-    $password_err = "Please enter a password.";
-  } elseif (strlen(trim($_POST["password"])) < 6) {
-    $password_err = "Password must have atleast 6 characters.";
+  if (empty(trim($_POST["department"]))) {
+    $department_err = "Please enter a department.";
+  } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["department"]))) {
+    $department_err = "department can only contain letters, numbers, and underscores.";
   } else {
-    $password = trim($_POST["password"]);
-  }
+    // Prepare a select statement
+    $sql = "SELECT id FROM classes WHERE department = ?";
+    if ($stmt = $mysqli->prepare($sql)) {
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param("s", $param_department);
 
-  // Validate confirm password
-  if (empty(trim($_POST["confirm_password"]))) {
-    $confirm_password_err = "Please confirm password.";
+      // Set parameters
+      $param_department = trim($_POST["department"]);
+
+      // Attempt to execute the prepared statement
+      if ($stmt->execute()) {
+        // store result
+        $stmt->store_result();
+        $department = trim($_POST["department"]);
+      } else {
+        echo "Oops! Something went wrong. Please try again later.";
+      }
+
+      // Close statement
+      $stmt->close();
+    }
+  }
+  if (empty(trim($_POST["college"]))) {
+    $college_err = "Please enter a college.";
+  } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["college"]))) {
+    $college_err = "college can only contain letters, numbers, and underscores.";
   } else {
-    $confirm_password = trim($_POST["confirm_password"]);
-    if (empty($password_err) && ($password != $confirm_password)) {
-      $confirm_password_err = "Password did not match.";
+    // Prepare a select statement
+    $sql = "SELECT id FROM classes WHERE college = ?";
+    if ($stmt = $mysqli->prepare($sql)) {
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param("s", $param_college);
+
+      // Set parameters
+      $param_college = trim($_POST["college"]);
+
+      // Attempt to execute the prepared statement
+      if ($stmt->execute()) {
+        // store result
+        $stmt->store_result();
+        $college = trim($_POST["college"]);
+      } else {
+        echo "Oops! Something went wrong. Please try again later.";
+      }
+
+      // Close statement
+      $stmt->close();
     }
   }
 
+  if (empty(trim($_POST["date"]))) {
+    $date_err = "Please enter a date.";
+  } else {
+    // Prepare a select statement
+    $sql = "SELECT id FROM classes WHERE date = ?";
+    if ($stmt = $mysqli->prepare($sql)) {
+      // Bind variables to the prepared statement as parameters
+      $stmt->bind_param(
+        "s",
+        $param_date
+      );
+
+      // Set parameters
+      $param_date = trim($_POST["date"]);
+
+      // Attempt to execute the prepared statement
+      if ($stmt->execute()) {
+        // store result
+        $stmt->store_result();
+        $date = trim($_POST["date"]);
+      } else {
+        echo "Oops! Something went wrong. Please try again later.";
+      }
+
+      // Close statement
+      $stmt->close();
+    }
+  }
+
+
   // Check input errors before inserting in database
-  if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+  if (empty($title_err) && empty($department_err) && empty($college_err) && empty($date_err)) {
 
     // Prepare an insert statement
-    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+    $sql = "INSERT INTO classes (title, department,college,date) VALUES (?, ?,?,?)";
 
     if ($stmt = $mysqli->prepare($sql)) {
       // Bind variables to the prepared statement as parameters
-      $stmt->bind_param("ss", $param_username, $param_password);
+      $stmt->bind_param("ssss", $param_title, $param_department, $param_college, $param_date);
 
       // Set parameters
-      $param_username = $username;
-      $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
+      $param_title = $title;
+      $param_department = $department;
+      $param_college = $college;
+      $param_date = $date;
 
       // Attempt to execute the prepared statement
       if ($stmt->execute()) {
         // Redirect to login page
         echo ' <div class="alert alert-primary" role="alert">
-          User is registered successfully!
+          Class is registered successfully!
         </div>';
       } else {
-        echo "Oops! Something went wrong. Please try again later.";
+        echo "Error: " . $sql . "<br>" . $mysqli->error;
       }
 
       // Close statement
@@ -102,7 +165,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <head>
   <meta charset="UTF-8">
-  <title>Sign Up</title>
+  <title>Add Class</title>
   <link href="../assets/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -119,23 +182,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </ul>
   </section>
   <div class="container p-5">
-    <h2>تسجيل مستخدم جديد</h2>
-    <p>يرجى ملء هذا النموذج لإنشاء حساب.</p>
+    <h2>تسجيل صف جديد</h2>
     <form action="" method="post">
       <div class="mb-3">
-        <label for="username" class="form-label">اسم المستخدم</label>
-        <input type="text" name="username" id="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
-        <span class="invalid-feedback"><?php echo $username_err; ?></span>
+        <label for="title" class="form-label">عنوان الصف</label>
+        <input type="text" name="title" id="title" class="form-control <?php echo (!empty($title_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $title; ?>">
+        <span class="invalid-feedback"><?php echo $title_err; ?></span>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">كلمة المرور</label>
-        <input type="password" name="password" id="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
-        <span class="invalid-feedback"><?php echo $password_err; ?></span>
+        <label for="department" class="form-label">القسم</label>
+        <input type="text" name="department" id="department" class="form-control <?php echo (!empty($department_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $department; ?>">
+        <span class="invalid-feedback"><?php echo $department_err; ?></span>
       </div>
       <div class="mb-3">
-        <label for="confirm_password" class="form-label">تأكيد كلمة المرور</label>
-        <input type="password" name="confirm_password" id="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
-        <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
+        <label for="college" class="form-label">الكلية</label>
+        <input type="text" name="college" id="college" class="form-control <?php echo (!empty($college_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $college; ?>">
+        <span class="invalid-feedback"><?php echo $college_err; ?></span>
+      </div>
+      <div class="mb-3">
+        <label for="date" class="form-label">التاريخ</label>
+        <input type="date" name="date" id="date" class="form-control <?php echo (!empty($date_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $date; ?>">
+        <span class="invalid-feedback"><?php echo $date_err; ?></span>
       </div>
       <div class="mb-3">
         <input type="submit" class="btn btn-primary" value="انشاء">

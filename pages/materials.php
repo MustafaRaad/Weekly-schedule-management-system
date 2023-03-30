@@ -35,8 +35,8 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
         case 'materials_list':
           include './materials/materials_list.php';
           break;
-        case 'add_materials':
-          include './materials/add_materials.php';
+        case 'add_material':
+          include './materials/add_material.php';
           break;
         default:
           echo 'Page not found';
@@ -46,10 +46,10 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <section class="container">
         <ul class="nav nav-pills nav-fill p-4">
           <li class="nav-item border rounded">
-            <a class="nav-link " aria-current="page" href="materials.php?page=materials_list">قائمة الصفوف</a>
+            <a class="nav-link " aria-current="page" href="materials.php?page=materials_list">قائمة المواد</a>
           </li>
           <li class="nav-item border rounded">
-            <a class="nav-link " href="materials.php?page=add_class">اضافة صف</a>
+            <a class="nav-link " href="materials.php?page=add_material">اضافة مادة</a>
           </li>
         </ul>
       </section>

@@ -3,8 +3,8 @@
 require_once "../../connection.php";
 
 // Define variables and initialize with empty values
-$username = $password = $confirm_password = "";
-$username_err = $password_err = $confirm_password_err = "";
+$username = $user_type = $password = $confirm_password = "";
+$username_err = $user_type_err = $password_err = $confirm_password_err = "";
 
 // Processing form data when form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -24,7 +24,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
       // Set parameters
       $param_username = trim($_POST["username"]);
-
       // Attempt to execute the prepared statement
       if ($stmt->execute()) {
         // store result
@@ -62,25 +61,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $confirm_password_err = "Password did not match.";
     }
   }
+  // Validate password
+  if (empty(trim($_POST["user_type"]))) {
+    $user_type_err = "Please enter a user type.";
+  } else {
+    $user_type = trim($_POST["user_type"]);
+  }
 
   // Check input errors before inserting in database
-  if (empty($username_err) && empty($password_err) && empty($confirm_password_err)) {
+  if (empty($username_err) && empty($user_type_err) &&  empty($password_err) && empty($confirm_password_err)) {
 
     // Prepare an insert statement
-    $sql = "INSERT INTO users (username, password) VALUES (?, ?)";
+    $sql = "INSERT INTO users (username, user_type, password) VALUES (?, ?, ?)";
 
     if ($stmt = $mysqli->prepare($sql)) {
       // Bind variables to the prepared statement as parameters
-      $stmt->bind_param("ss", $param_username, $param_password);
+      $stmt->bind_param("sss", $param_username, $param_user_type, $param_password);
 
       // Set parameters
       $param_username = $username;
+      $param_user_type = $user_type;
       $param_password = password_hash($password, PASSWORD_DEFAULT); // Creates a password hash
 
       // Attempt to execute the prepared statement
       if ($stmt->execute()) {
         // Redirect to login page
-        header("location: /wsms/users/user_login.php");
+        header("location: /wsms/pages/users/user_login.php");
       } else {
         echo "Oops! Something went wrong. Please try again later.";
       }
@@ -125,6 +131,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <input type="password" name="confirm_password" id="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
         <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
       </div>
+      <label class="form-label">User Type</label>
+      <select class="form-select mb-3" aria-label="User Type" name="user_type" id="user_type">
+        <option value="1">Admin</option>
+        <option value="2">Teacher</option>
+        <option value="3">Student</option>
+      </select>
+      <span class="invalid-feedback"><?php echo $user_type_err; ?></span>
       <div class="mb-3">
         <input type="submit" class="btn btn-primary" value="Submit">
       </div>

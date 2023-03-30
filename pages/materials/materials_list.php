@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Classes list</title>
+  <title>Materials list</title>
   <link href="../../assets/css/bootstrap.min.css" rel="stylesheet">
   <link href="../assets/css/style.css" rel="stylesheet">
 
@@ -14,10 +14,10 @@
   <section>
     <ul class="nav nav-pills nav-fill p-4">
       <li class="nav-item border rounded">
-        <a class="nav-link active" aria-current="page" href="classes.php?page=classes_list">قائمة الصفوف</a>
+        <a class="nav-link active" aria-current="page" href="materials.php?page=materials_list">قائمة المواد</a>
       </li>
       <li class="nav-item border rounded">
-        <a class="nav-link " href="classes.php?page=add_class">اضافة صف</a>
+        <a class="nav-link " href="materials.php?page=add_material">اضافة مادة</a>
       </li>
     </ul>
   </section>
@@ -26,7 +26,7 @@
     if (isset($error)) {
       echo "<p style='color:red;'>$error</p>";
     } else {
-      $sql = "SELECT * FROM classes";
+      $sql = "SELECT * FROM materials";
       // Execute the query
       $result = mysqli_query($mysqli, $sql);
     }
@@ -53,7 +53,7 @@
       </table>
     <?php
     } else {
-      echo "No classes found.";
+      echo "No materials found.";
     }
     // Close the connection
     mysqli_close($mysqli);
