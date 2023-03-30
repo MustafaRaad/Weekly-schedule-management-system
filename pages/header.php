@@ -14,9 +14,9 @@
          <li class="nav-item">
            <a class="nav-link active" aria-current="page" href="/wsms/pages/materials.php">المواد</a>
          </li>
-         <li class="nav-item">
+         <!-- <li class="nav-item">
            <a class="nav-link active" aria-current="page" href="/wsms/pages/teachers.php">المدرسين</a>
-         </li>
+         </li> -->
        </ul>
        <ul class="navbar-nav mb-2 mb-lg-0">
          <li class="nav-item">
