@@ -64,7 +64,7 @@ $sql = "CREATE TABLE IF NOT EXISTS materials (
     title VARCHAR(255) NOT NULL,
     department VARCHAR(255) NOT NULL,
     college VARCHAR(255) NOT NULL,
-    units INT(2) NOT NULL,
+    hours INT(2) NOT NULL,
     date DATE NOT NULL,
         class_id INT(11) NOT NULL,
      PRIMARY KEY (id),

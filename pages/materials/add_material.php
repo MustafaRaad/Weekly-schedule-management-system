@@ -71,7 +71,7 @@ $mysqli->close();
     <form method="post" action="">
       <label for="title" class="form-label">عنوان المادة</label>
       <input class="form-control" type="text" name="title" required><br>
-      <label for="units" class="form-label">الوحدات</label>
+      <label for="units" class="form-label">الساعات</label>
       <input class="form-control" type="number" name="units" required><br>
       <label for="date" class="form-label">التاريخ</label>
       <input class="form-control" type="date" name="date" required><br>
