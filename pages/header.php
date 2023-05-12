@@ -9,7 +9,7 @@
            <a class="nav-link active" aria-current="page" href="/wsms/pages/home.php">الرئيسية</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/wsms/pages/schedules.php">الجداول</a>
+           <a class="nav-link active" aria-current="page" href="/wsms/pages/schedules.php?page=schedules_list">الجداول</a>
          </li>
          <li class="nav-item">
            <a class="nav-link active" aria-current="page" href="/wsms/pages/classes.php?page=classes_list">الصفوف</a>
