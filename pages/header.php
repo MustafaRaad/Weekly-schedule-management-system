@@ -9,14 +9,17 @@
            <a class="nav-link active" aria-current="page" href="/wsms/pages/home.php">الرئيسية</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/wsms/pages/classes.php">الصفوف</a>
+           <a class="nav-link active" aria-current="page" href="/wsms/pages/schedules.php">الجداول</a>
          </li>
          <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/wsms/pages/materials.php">المواد</a>
+           <a class="nav-link active" aria-current="page" href="/wsms/pages/classes.php?page=classes_list">الصفوف</a>
          </li>
-         <!-- <li class="nav-item">
-           <a class="nav-link active" aria-current="page" href="/wsms/pages/teachers.php">المدرسين</a>
-         </li> -->
+         <li class="nav-item">
+           <a class="nav-link active" aria-current="page" href="/wsms/pages/materials.php?page=materials_list">المواد</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link active" aria-current="page" href="/wsms/pages/teachers.php?page=teachers_list">المدرسين</a>
+         </li>
        </ul>
        <ul class="navbar-nav mb-2 mb-lg-0">
          <li class="nav-item">

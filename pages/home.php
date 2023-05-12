@@ -26,11 +26,26 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
   ?>
   <section class="container p-3">
     <div class="d-flex">
-      <!-- <button class="col border m-3 p-3">المواد</button>
-      <button class="col border m-3 p-3">المواد</button>
-      <button class="col border m-3 p-3">المواد</button> -->
+      <button class="col border m-3 p-5">
+        <a class="nav-link active" aria-current="page" href="/wsms/pages/classes.php?page=classes_list">الصفوف</a>
+      </button>
+      <button class="col border m-3 p-3">
+        <a class="nav-link active" aria-current="page" href="/wsms/pages/materials.php?page=materials_list">المواد</a>
+      </button>
+      <button class="col border m-3 p-3">
+        <a class="nav-link active" aria-current="page" href="/wsms/pages/teachers.php?page=teachers_list">المدرسين</a>
+      </button>
     </div>
 
+  </section>
+  <section class="container p-3">
+    <div class="row justify-center">
+      <div class="col-10 text-center m-auto p-5 ">
+        <button class="btn btn-primary btn-lg btn-block">
+          <a class="nav-link active" aria-current="page" href="/wsms/pages/teachers.php?page=teachers_list">+ اضافة جدول</a>
+        </button>
+      </div>
+    </div>
   </section>
   <script src="/assets/js/bootstrap.bundle.min.js"></script>
 </body>

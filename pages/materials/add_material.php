@@ -18,7 +18,7 @@ if ($result->num_rows > 0) {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // get form data and sanitize input
   $title = htmlspecialchars($_POST["title"]);
-  $units = htmlspecialchars($_POST["units"]);
+  $hours = htmlspecialchars($_POST["hours"]);
   $date = htmlspecialchars($_POST["date"]);
   $department = htmlspecialchars($_POST["department"]);
   $college = htmlspecialchars($_POST["college"]);
@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $class_id = $row["id"];
 
   // insert data into materials table
-  $sql = "INSERT INTO materials (title,units, date, department, college, class_id) VALUES ('$title','$units', '$date', '$department', '$college', '$class_id')";
+  $sql = "INSERT INTO materials (title,hours, date, department, college, class_id) VALUES ('$title','$hours', '$date', '$department', '$college', '$class_id')";
 
   if ($mysqli->query($sql) === TRUE) {
     echo ' <div class="alert alert-primary" role="alert">
@@ -71,8 +71,8 @@ $mysqli->close();
     <form method="post" action="">
       <label for="title" class="form-label">عنوان المادة</label>
       <input class="form-control" type="text" name="title" required><br>
-      <label for="units" class="form-label">الساعات</label>
-      <input class="form-control" type="number" name="units" required><br>
+      <label for="hours" class="form-label">الساعات</label>
+      <input class="form-control" type="number" name="hours" required><br>
       <label for="date" class="form-label">التاريخ</label>
       <input class="form-control" type="date" name="date" required><br>
       <label for="department" class="form-label">القسم</label>

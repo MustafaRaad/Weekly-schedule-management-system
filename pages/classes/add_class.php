@@ -12,8 +12,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // Validate username
   if (empty(trim($_POST["title"]))) {
     $title_err = "Please enter a title.";
-  } elseif (!preg_match('/^[a-zA-Z0-9_]+$/', trim($_POST["title"]))) {
-    $title_err = "title can only contain letters, numbers, and underscores.";
   } else {
     // Prepare a select statement
     $sql = "SELECT id FROM classes WHERE title = ?";

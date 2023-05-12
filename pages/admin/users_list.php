@@ -19,6 +19,12 @@
       <li class="nav-item border rounded">
         <a class="nav-link" href="admin.php?page=add_user">اضافة مستخدم</a>
       </li>
+      <li class="nav-item border rounded">
+        <a class="nav-link" aria-current="page" href="admin.php?page=teachers_list">قائمة المدرسين</a>
+      </li>
+      <li class="nav-item border rounded">
+        <a class="nav-link" href="admin.php?page=add_teachers">اضافة مدرس</a>
+      </li>
     </ul>
   </section>
   <section class="container bg-body-tertiary p-3">

@@ -46,10 +46,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
       <section class="container">
         <ul class="nav nav-pills nav-fill p-4">
           <li class="nav-item border rounded">
-            <a class="nav-link " aria-current="page" href="teachers.php?page=teachers_list">قائمة الصفوف</a>
-          </li>
-          <li class="nav-item border rounded">
-            <a class="nav-link " href="teachers.php?page=add_class">اضافة صف</a>
+            <a class="nav-link " aria-current="page" href="teachers.php?page=teachers_list">قائمة المدرسين</a>
           </li>
         </ul>
       </section>

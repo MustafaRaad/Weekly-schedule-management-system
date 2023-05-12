@@ -28,7 +28,7 @@ if (!$conn) {
   die("Connection failed: " . mysqli_connect_error());
 }
 
-// Create table
+// Create table - users
 $sql = "CREATE TABLE IF NOT EXISTS users (
     id INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
     user_type INT(1) NOT NULL UNIQUE,
@@ -43,7 +43,7 @@ if (mysqli_query($conn, $sql)) {
   echo "Error creating table: " . mysqli_error($conn);
 }
 
-// Create table
+// Create table - classes
 $sql = "CREATE TABLE IF NOT EXISTS classes (
     id INT(11) NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
@@ -58,7 +58,8 @@ if (mysqli_query($conn, $sql)) {
 } else {
   echo "Error creating table: " . mysqli_error($conn);
 }
-// Create table
+
+// Create table - materials
 $sql = "CREATE TABLE IF NOT EXISTS materials (
     id INT(11) NOT NULL AUTO_INCREMENT,
     title VARCHAR(255) NOT NULL,
@@ -66,9 +67,46 @@ $sql = "CREATE TABLE IF NOT EXISTS materials (
     college VARCHAR(255) NOT NULL,
     hours INT(2) NOT NULL,
     date DATE NOT NULL,
-        class_id INT(11) NOT NULL,
-     PRIMARY KEY (id),
-         FOREIGN KEY (class_id) REFERENCES classes(id)
+    class_id INT(11) NOT NULL,
+    PRIMARY KEY (id),
+    FOREIGN KEY (class_id) REFERENCES classes(id)
+)";
+
+if (mysqli_query($conn, $sql)) {
+  // echo "Table created successfully";
+} else {
+  echo "Error creating table: " . mysqli_error($conn);
+}
+
+// Create table - teachers
+$sql = "CREATE TABLE IF NOT EXISTS teachers (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    title VARCHAR(255) NOT NULL,
+    name VARCHAR(255) NOT NULL,
+    department VARCHAR(255) NOT NULL,
+    college VARCHAR(255) NOT NULL,
+    PRIMARY KEY (id)
+)";
+
+if (mysqli_query($conn, $sql)) {
+  // echo "Table created successfully";
+} else {
+  echo "Error creating table: " . mysqli_error($conn);
+}
+
+
+// Create table - teachers
+$sql = "CREATE TABLE IF NOT EXISTS schedules (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    teacher_id INT(11) NOT NULL,
+    material_id INT(11) NOT NULL,
+    class_id INT(11) NOT NULL,
+      time_from TIME,
+    time_to TIME,
+    PRIMARY KEY (id),
+      FOREIGN KEY (teacher_id) REFERENCES teachers(id),
+    FOREIGN KEY (material_id) REFERENCES materials(id),
+    FOREIGN KEY (class_id) REFERENCES classes(id)
 
 )";
 
@@ -77,6 +115,8 @@ if (mysqli_query($conn, $sql)) {
 } else {
   echo "Error creating table: " . mysqli_error($conn);
 }
+
+
 
 
 mysqli_close($conn);

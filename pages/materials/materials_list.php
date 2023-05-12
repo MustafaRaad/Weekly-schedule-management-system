@@ -35,6 +35,7 @@
       <table class="table">
         <thead>
           <th scope="col">العنوان</th>
+          <th scope="col">الساعات</th>
           <th scope="col">الكلية</th>
           <th scope="col">القسم</th>
           <th scope="col">التاريخ</th>
@@ -45,7 +46,7 @@
           // Check if the query was successful
           // Fetch the results into an array
           while ($row = mysqli_fetch_assoc($result)) {
-            echo "<tr><th scope='row'>" . $row["title"] . "</th>" . "<td scope='row'>" . $row["college"] . "</td>" . "<td scope='row'>" . $row["department"] . "</td>" . "<td scope='row'>" . $row["date"] . "</td>";
+            echo "<tr><th scope='row'>" . $row["title"] . "</th>" . "<td scope='row'>" . $row["hours"] . "</td>" . "<td scope='row'>" . $row["college"] . "</td>" . "<td scope='row'>" . $row["department"] . "</td>" . "<td scope='row'>" . $row["date"] . "</td>";
           }
           ?>
 
