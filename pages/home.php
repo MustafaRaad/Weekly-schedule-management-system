@@ -42,7 +42,7 @@ if (!isset($_SESSION["loggedin"]) || $_SESSION["loggedin"] !== true) {
     <div class="row justify-center">
       <div class="col-10 text-center m-auto p-5 ">
         <button class="btn btn-primary btn-lg btn-block">
-          <a class="nav-link active" aria-current="page" href="/wsms/pages/teachers.php?page=teachers_list">+ اضافة جدول</a>
+          <a class="nav-link active" aria-current="page" href="/wsms/pages/schedules.php?page=add_schedules">+ اضافة جدول</a>
         </button>
       </div>
     </div>
