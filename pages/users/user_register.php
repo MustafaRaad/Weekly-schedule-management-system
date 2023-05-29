@@ -113,29 +113,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
   <div class="container p-5">
-    <h2>Sign Up</h2>
-    <p>Please fill this form to create an account.</p>
+    <h2>تسجيل حساب</h2>
+    <p>الرجاء ملئ معلومات الحاسب</p>
     <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post">
       <div class="mb-3">
-        <label for="username" class="form-label">Username</label>
+        <label for="username" class="form-label">اسم المستخدم</label>
         <input type="text" name="username" id="username" class="form-control <?php echo (!empty($username_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $username; ?>">
         <span class="invalid-feedback"><?php echo $username_err; ?></span>
       </div>
       <div class="mb-3">
-        <label for="password" class="form-label">Password</label>
+        <label for="password" class="form-label">كلمة المرور</label>
         <input type="password" name="password" id="password" class="form-control <?php echo (!empty($password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $password; ?>">
         <span class="invalid-feedback"><?php echo $password_err; ?></span>
       </div>
       <div class="mb-3">
-        <label for="confirm_password" class="form-label">Confirm Password</label>
+        <label for="confirm_password" class="form-label">تأكيد كلمة المرور</label>
         <input type="password" name="confirm_password" id="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>" value="<?php echo $confirm_password; ?>">
         <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
       </div>
-      <label class="form-label">User Type</label>
+      <label class="form-label">نوع المستخدم</label>
       <select class="form-select mb-3" aria-label="User Type" name="user_type" id="user_type">
-        <option value="1">Admin</option>
-        <option value="2">Teacher</option>
-        <option value="3">Student</option>
+        <option value="1">ادمن</option>
+        <option value="2">مدرس</option>
+        <option value="3">طالب</option>
       </select>
       <span class="invalid-feedback"><?php echo $user_type_err; ?></span>
       <div class="mb-3">
