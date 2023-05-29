@@ -42,6 +42,7 @@
         <thead>
           <th scope="col">المعرف</th>
           <th scope="col">اسم المستخدم</th>
+          <th scope="col">نوع المستخدم</th>
           <th scope="col">وقت الانشاء</th>
         </thead>
         <tbody>
@@ -50,7 +51,7 @@
           // Check if the query was successful
           // Fetch the results into an array
           while ($row = mysqli_fetch_assoc($result)) {
-            echo "<tr><th scope='row'>" . $row["id"] . "</th>" . "<td scope='row'>" . $row["username"] . "</td>" . "<td scope='row'>" . $row["created_at"] . "</td>";
+            echo "<tr><th scope='row'>" . $row["id"] . "</th>" . "<td scope='row'>" . $row["username"] . "</td>" . "<td scope='row'>" . $row["user_type"] . "</td>" . "<td scope='row'>" . $row["created_at"] . "</td>";
           }
           ?>
 

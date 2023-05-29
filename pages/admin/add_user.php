@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   if (empty($username_err) && empty($user_type_err) && empty($password_err) && empty($confirm_password_err)) {
     // Generate a unique user_type value
     $user_type = trim($_POST["user_type"]) . '_' . uniqid();
-    echo $user_type;
+
     // Prepare an insert statement
     $sql = "INSERT INTO users (username, user_type, password) VALUES (?, ?, ?)";
 
